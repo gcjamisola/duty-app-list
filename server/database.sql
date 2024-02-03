@@ -1,0 +1,6 @@
+CREATE DATABASE duty_db;
+
+CREATE TABLE duties(
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255)
+);
