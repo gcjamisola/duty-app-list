@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const client = axios.create({ baseURL: 'http://localhost:5000' })
+const BACKEND_URL = import.meta.env.VITE_BACKEND.URL
+const client = axios.create({ baseURL: BACKEND_URL })
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const ApiWrapper = function (options: any) {
