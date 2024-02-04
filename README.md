@@ -1,10 +1,14 @@
 # Duty List App by Gian Jamisola
 
+### Hosted in the cloud using <img src="https://assets.vercel.com/image/upload/front/favicon/vercel/180x180.png" width='30'> Vercel (client) & <img src="https://railway.app/brand/logo-dark.svg" width='30'> Railway (server)
+
+[Duty List APP on Vercel](https://duty-app-list.vercel.app/)
+
 ### Installation steps
 
 1. Clone this repository to destination folder.
 
-`git clone https://github.com/gcjamisola/duty-app-list.git`
+`git clone https://github.com/gcjamisola/duty-list-app.git`
 
 ##### For Client-side
 
