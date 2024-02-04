@@ -39,7 +39,7 @@ app.post('/duties', async(req: Request, res: Response) =>  {
 app.get('/duties', async(req: Request, res: Response) => {
     try {
         const allDuties = await client.query(
-            'SELECT * FROM duties')
+            'SELECT * FROM duties ORDER BY id ASC')
 
         res.status(200).json(allDuties.rows)
     } catch (error) {
