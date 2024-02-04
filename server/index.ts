@@ -1,8 +1,11 @@
-// const express = require('express')
 import express, { Express, Request, Response } from 'express'
 const dotenv = require('dotenv')
 const cors = require('cors')
-const pool = require('./db')
+
+const pg = require('pg')
+const CONSTRING = 'postgresql://postgres:dBb5221ED44a6aADBa2AfDEgaegbc-2b@roundhouse.proxy.rlwy.net:10730/railway'
+const client = new pg.Client(CONSTRING)
+client.connect()
 
 dotenv.config()
 const app: Express = express()
@@ -15,14 +18,14 @@ app.use(express.json())
 //**ROUTES
 
 //CREATE
-app.post('/duties', async(req: Request, res: Response) => {
+app.post('/duties', async(req: Request, res: Response) =>  {
     try {
         const { name } = req.body
 
         if(!name || name === '')
         res.status(400).json('Name cannot be empty.')
 
-        const newDuty = await pool.query(
+        const newDuty = await client.query(
             'INSERT INTO duties (name) VALUES($1) RETURNING *', 
             [name])
 
@@ -35,7 +38,7 @@ app.post('/duties', async(req: Request, res: Response) => {
 //GET ALL
 app.get('/duties', async(req: Request, res: Response) => {
     try {
-        const allDuties = await pool.query(
+        const allDuties = await client.query(
             'SELECT * FROM duties')
 
         res.status(200).json(allDuties.rows)
@@ -52,7 +55,7 @@ app.get('/duties/:id', async(req: Request, res: Response) => {
         if(!id)
         res.status(400).json('ID cannot be empty.')
 
-        const duty = await pool.query(
+        const duty = await client.query(
             'SELECT * FROM duties WHERE id = $1', 
             [id])
 
@@ -74,7 +77,7 @@ app.put('/duties/:id', async(req: Request, res: Response) => {
         if(!name || name === '')
         res.status(400).json('Name cannot be empty.')
 
-        await pool.query(
+        await client.query(
             'UPDATE duties SET name = $1 WHERE id = $2',
             [name, id])
 
@@ -88,7 +91,7 @@ app.put('/duties/:id', async(req: Request, res: Response) => {
 app.delete('/duties/:id', async(req: Request, res: Response) => {
     try {
         const { id } = req.params
-        await pool.query(
+        await client.query(
             'DELETE FROM duties WHERE id = $1',
             [id]
         )
